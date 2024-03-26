@@ -1,10 +1,14 @@
 import './App.css';
 import { useState } from 'react';
+// import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import Display from './components/display';
+import Navbar from './components/navbar';
 
 function App() {
 
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     email: '@gmail.com',
     mobile: '+1',
     education: '',
@@ -15,8 +19,9 @@ function App() {
     languages: [],
   })
 
-    
 
+
+  
   const onChangeHandler = (event) => {
     console.log(event)
     if(event.target.name === 'languages') {
@@ -42,14 +47,24 @@ function App() {
   const onSubmitHandler = (event) => {
     event.preventDefault()
     console.table(formData)
+    navigate('/display', { state: { formData } }); 
   }
+  const navigate = useNavigate();
 
   return (
     <div className="App">
+      <Navbar />
+      <div className = "Content">
+      <Routes>
+          <Route path="/display" element={<Display />} />
+        </Routes>
+
+      </div>
+      <h2>Create Resume</h2>
     <form onSubmit={onSubmitHandler}>
       <div className="form-group">
-        <label htmlFor="username" className="form-label">User Name</label>
-        <input className="form-control" name="username" onChange={onChangeHandler} value={formData.username} />
+        <label htmlFor="name" className="form-label">Name</label>
+        <input className="form-control" name="name" onChange={onChangeHandler} value={formData.name} />
       </div>
       <div className="form-group">
         <label htmlFor="email" className="form-label">Email</label>
