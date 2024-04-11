@@ -1,23 +1,39 @@
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-const Display = ({ data }) => {
+const Display = () => {
     const location = useLocation();
-  const { formData } = location.state || {};
+    console.log(location.state);
+    let formDataArr = JSON.parse(localStorage.getItem('formData')) || [];
+
+    const displayLanguages = (formData) => {
+        // Assuming formData.languages is an array of strings.
+      if (formData.languages && formData.languages.length > 0) {
+      return formData.languages.join(", ");
+        }
+          return 'No languages provided';
+      };
 
     return (
         <div className="display">
+        <h2> All Resumes</h2>
         {/* Display the data here */}
-        <p>Name: {formData ? formData.name : 'No name provided'}</p>
-        <p>Email: {formData ? formData.email : 'No email provided'}</p>
-        <p>Mobile: {formData ? formData.mobile: 'No mobile provided'}</p>
-        <p>Education: {formData ? formData.education : 'No education provided'}</p>
-        <p>Activity: {formData ? formData.activity : 'No activity provided'}</p>
-        <p>Occupation: {formData ? formData.occupation : 'No occupation provided'}</p>
-        <p>Gender: {formData ? formData.gender : 'No gender provided'}</p>
-        <p>Languages: {formData ? formData.languages : 'No language provided'}</p>
-        {/* Repeat for other pieces of data */}
+            {formDataArr.map((formData, index) => (
+                <div key={index}>
+                  <h2>--------------------------------</h2>
+                  <p>Name: {formData.name || 'No name provided'}</p>
+                  <p>Email: {formData.email || 'No email provided'}</p>
+                  <p>Mobile: {formData.mobile || 'No mobile provided'}</p>
+                  <p>Education: {formData.education || 'No education provided'}</p>
+                  <p>Activity: {formData.activity || 'No activity provided'}</p>
+                  <p>Occupation: {formData.occupation || 'No occupation provided'}</p>
+                  <p>Gender: {formData.gender || 'No gender provided'}</p>
+                  <p>Languages: {displayLanguages(formData)}</p>
+                  <p>Projects: {formData.projects || 'No projects provided'}</p>
+            </div>
+            ))}
       </div>
     );
-  }
-  
+  // }
+}
   export default Display;
