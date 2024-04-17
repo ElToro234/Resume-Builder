@@ -5,10 +5,14 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Display from './components/display';
 import Navbar from './components/navbar';
-// import Database from './database.js';
-// import Server from './server.js';
+import { useOpenAI, OpenAIProvider } from './components/openAI';
+
+
+
+
 
 function App() {
+  const { generateText } = useOpenAI();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -18,9 +22,31 @@ function App() {
     projects: '',
     activity: '',
     occupation: '',
-    gender: '',
     languages: [],
   })
+
+  const handleAutomaticFilling = async () => {
+    try {
+      const educationPrompt = "Im looking into creating a resume tailored to IT field, create in resume format education in CS. ";
+      const education = await generateText(educationPrompt);
+      
+      const projectsPrompt = "Describe a couple of software projects suitable for a resume.";
+      const projects = await generateText(projectsPrompt);
+      
+      const activityPrompt = "Suggest some professional activities outside of work.";
+      const activity = await generateText(activityPrompt);
+      
+
+      setFormData(prevState => ({
+        ...prevState,
+        education,
+        projects,
+        activity,
+      }));
+    } catch (error) {
+      console.error("Error auto-filling form:", error);
+    }
+  };
 
 
 
@@ -48,7 +74,7 @@ function App() {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:3001/database')
+    axios.get('http://localhost:3004/database')
         .then(response => {
             console.log(response.data);
         })
@@ -69,11 +95,26 @@ function App() {
     
     // Navigate to the Display component
     navigate('/display', { state: { formData } }); 
+
+    
+
+    //reset the form
+    setFormData({
+      name: '',
+      email: '@gmail.com',
+      mobile: '+1',
+      education: '',
+      projects: '',
+      activity: '',
+      occupation: '',
+      languages: [],
+    });
   }
 
   
 
   return (
+    <OpenAIProvider>
     <div className="App">
       <Navbar />
       <div className = "Content">
@@ -82,6 +123,7 @@ function App() {
               <React.Fragment>
                 {/* Resume Form Goes Here */}
                 <h2>Create Resume</h2>
+                
                   <form onSubmit={onSubmitHandler}>
                     <div className="form-group">
                       <label htmlFor="name" className="form-label">Name</label>
@@ -114,23 +156,6 @@ function App() {
                         <option value="employee">Employee</option>
                         <option value="other">Other</option>
                       </select>
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label">Gender</label>
-                      <div>
-                        <div>
-                          <input id="male"  type="radio" name="gender" value="male" onChange={onChangeHandler} checked={formData.gender === 'male'} />
-                          <label htmlFor="male">Male</label>
-                        </div>
-                        <div>
-                          <input id="female" type="radio" name="gender" value="female" onChange={onChangeHandler} checked={formData.gender === 'female'} />
-                          <label htmlFor="female">Female</label>
-                        </div>
-                        <div>
-                          <input id="other"  type="radio" name="gender" value="other" onChange={onChangeHandler} checked={formData.gender === 'other'} />
-                          <label htmlFor="other">Other</label>
-                        </div>
-                      </div>
                     </div>
                     <div className="form-group">
                       <label className="form-label">Languages</label>
@@ -166,17 +191,20 @@ function App() {
                       </div>
                     </div>
                     <div className="form-group">
+                      <button type="button" onClick={handleAutomaticFilling}>Auto-Fill with AI</button>
                       <button className="btn" type="submit" >Submit</button>
                     </div>
                   </form>
-               
               </React.Fragment>
+              
             } />
+            
           <Route path="/display" element={<Display />} />
         </Routes>
 
       </div>
   </div>
+  </OpenAIProvider>
 );
 }
 

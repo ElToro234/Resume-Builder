@@ -27,7 +27,6 @@ const Display = () => {
                   <p>Education: {formData.education || 'No education provided'}</p>
                   <p>Activity: {formData.activity || 'No activity provided'}</p>
                   <p>Occupation: {formData.occupation || 'No occupation provided'}</p>
-                  <p>Gender: {formData.gender || 'No gender provided'}</p>
                   <p>Languages: {displayLanguages(formData)}</p>
                   <p>Projects: {formData.projects || 'No projects provided'}</p>
             </div>
