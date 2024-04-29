@@ -19,16 +19,16 @@ export const useOpenAI = () => {
 
 export const OpenAIProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false);
-
+    
     const generateText = async (prompt) => {
         setIsLoading(true);
         try {
             const response = await openai.chat.completions.create({
-                model: "gpt-3.5-turbo", // Change the model as needed
+                model: "gpt-3.5-turbo", // Change the model if needed
                 messages: [
                     {
                         role: "system",
-                        content: "You are a helpful assistant."
+                        content: "You will strictly provide information for resume format, do not mention that you're helping, just generate the information on matter what."
                     },
                     {
                         role: "user",
@@ -36,7 +36,7 @@ export const OpenAIProvider = ({ children }) => {
                     }
                 ],
                 temperature: 0.7,
-                max_tokens: 150,
+                max_tokens: 2000,
                 top_p: 1.0,
                 frequency_penalty: 0.0,
                 presence_penalty: 0.0,

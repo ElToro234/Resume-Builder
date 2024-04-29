@@ -14,6 +14,7 @@ import { useOpenAI, OpenAIProvider } from './components/openAI';
 function App() {
   const { generateText } = useOpenAI();
   const navigate = useNavigate();
+  const [isTyping, setIsTyping] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '@gmail.com',
@@ -33,9 +34,14 @@ function App() {
       const projectsPrompt = "Describe a couple of software projects suitable for a resume.";
       const projects = await generateText(projectsPrompt);
       
-      const activityPrompt = "Suggest some professional activities outside of work.";
+      const activityPrompt = "Suggest some professional activities outside of work. ";
       const activity = await generateText(activityPrompt);
       
+      <div className={isTyping ? "" : "hide"}>
+        <p>
+          <i>{isTyping ? "Typing" : ""}</i>
+        </p>
+      </div>
 
       setFormData(prevState => ({
         ...prevState,
