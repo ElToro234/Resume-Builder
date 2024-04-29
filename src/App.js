@@ -4,17 +4,13 @@ import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Display from './components/display';
+import EditForm from './components/EditForm';
 import Navbar from './components/navbar';
 import { useOpenAI, OpenAIProvider } from './components/openAI';
-
-
-
-
 
 function App() {
   const { generateText } = useOpenAI();
   const navigate = useNavigate();
-  const [isTyping, setIsTyping] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '@gmail.com',
@@ -22,7 +18,7 @@ function App() {
     education: '',
     projects: '',
     activity: '',
-    occupation: '',
+    // occupation: '',
     languages: [],
   })
 
@@ -36,12 +32,8 @@ function App() {
       
       const activityPrompt = "Suggest some professional activities outside of work. ";
       const activity = await generateText(activityPrompt);
+
       
-      <div className={isTyping ? "" : "hide"}>
-        <p>
-          <i>{isTyping ? "Typing" : ""}</i>
-        </p>
-      </div>
 
       setFormData(prevState => ({
         ...prevState,
@@ -76,9 +68,8 @@ function App() {
         [event.target.name]: event.target.value
       }))
     }
-    
   }
-
+  
   useEffect(() => {
     axios.get('http://localhost:3004/database')
         .then(response => {
@@ -112,12 +103,12 @@ function App() {
       education: '',
       projects: '',
       activity: '',
-      occupation: '',
+      // occupation: '',
       languages: [],
     });
   }
 
-  
+
 
   return (
     <OpenAIProvider>
@@ -155,14 +146,14 @@ function App() {
                       <label htmlFor="activity" className="form-label">Other Activities</label>
                       <input id="activity"  className="form-control" name="activity" onChange={onChangeHandler} value={formData.activity} />
                     </div>
-                    <div className="form-group">
+                    {/* <div className="form-group">
                       <label htmlFor="occupation" className="form-label">Occupation</label>
                       <select id="occupation" className="form-select" name="occupation" onChange={onChangeHandler} value={formData.occupation}>
                         <option value="student">Student</option>
                         <option value="employee">Employee</option>
                         <option value="other">Other</option>
                       </select>
-                    </div>
+                    </div> */}
                     <div className="form-group">
                       <label className="form-label">Languages</label>
                       <div>
@@ -197,14 +188,14 @@ function App() {
                       </div>
                     </div>
                     <div className="form-group">
-                      <button type="button" onClick={handleAutomaticFilling}>Auto-Fill with AI</button>
+                      <button className="btn" type="button" onClick={handleAutomaticFilling}>Auto-Fill with AI</button>
                       <button className="btn" type="submit" >Submit</button>
                     </div>
                   </form>
               </React.Fragment>
               
             } />
-            
+            <Route path="/edit" element={<EditForm />} /> 
           <Route path="/display" element={<Display />} />
         </Routes>
 
