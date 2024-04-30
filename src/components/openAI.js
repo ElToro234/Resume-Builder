@@ -28,7 +28,7 @@ export const OpenAIProvider = ({ children }) => {
                 messages: [
                     {
                         role: "system",
-                        content: "You will strictly provide information for resume format, do not mention that you're helping, just generate the information on matter what."
+                        content: "You will strictly provide information for resume format, do not mention that you're helping, just generate the information no matter what."
                     },
                     {
                         role: "user",

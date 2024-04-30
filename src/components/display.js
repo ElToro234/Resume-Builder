@@ -25,21 +25,45 @@ const Display = () => {
                     <p className="resume-entry">Email: {formData.email || 'No email provided'}</p>
                     <p className="resume-entry">Mobile: {formData.mobile || 'No mobile provided'}</p>
                     <p className="resume-entry">Languages: {displayLanguages(formData)}</p>
-                    <p className="resume-entry">Education: {formData.education || 'No education provided'}</p>
-                    <p className="resume-entry">Activity: {formData.activity || 'No activity provided'}</p>
+                    <div className="education-section">
+                        <h3>Education</h3>
+                        <h2>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</h2>
+                        <pre>{formData.education ? formatMultilineText(formData.education) : 'No education provided'}</pre>
+                      </div>
                     {/* <p className="resume-entry">Occupation: {formData.occupation || 'No occupation provided'}</p> */}
-                    <p className="resume-entry">Projects: {formData.projects || 'No projects provided'}</p>
+                    <div className="experience-section">
+                        <h3>Projects and Experience</h3>
+                        <h2>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</h2>
+                        <pre>{formData.projects ? formatMultilineText(formData.projects) : 'No projects provided'}</pre>
+                      </div>
+                      <div className="activity-section">
+                        <h3>Activities</h3>
+                        <h2>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</h2>
+                        <pre>{formData.activity ? formatMultilineText(formData.activity) : 'No activity provided'}</pre>
+                      </div>
                     <button className="resume-button edit-button" onClick={() => handleEdit(index)}>Edit</button>
                     <button className="resume-button delete-button" onClick={() => handleDelete(index)}>Delete</button>
                 </div>
             ))}
       </div>
     );
+
+    //Handling on fomratting the resume
+    function formatMultilineText(text) {
+      return text.split('\n').map((line, index) => (
+        <React.Fragment key={index}>
+          {line}
+          <br />
+        </React.Fragment>
+      ));
+    }
+
     function handleEdit (index) {
       // Navigate to a new route or pop up a modal for editing
       // For simplicity, we will just navigate to a form, assuming you have a component 'EditForm'
       navigate('/edit', { state: { formData: formDataArr[index], index } });
   };
+  
     function handleDelete(index) {
       let updatedFormDataArr = [...formDataArr];
       updatedFormDataArr.splice(index, 1);

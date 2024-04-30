@@ -68,15 +68,15 @@ const EditForm = () => {
       </div>
       <div className="form-group">
         <label htmlFor="education" className="form-label">Education:</label>
-        <input type="text" defaultValue={formData.education} name="education" onChange={handleChange} className="form-control" />
+        <textarea type="text" defaultValue={formData.education} name="education" onChange={handleChange} className="form-control" />
       </div>
       <div className="form-group">
         <label htmlFor="activity" className="form-label">Activity:</label>
-        <input type="text" defaultValue={formData.activity} name="activity" onChange={handleChange} className="form-control" />
+        <textarea type="text" defaultValue={formData.activity} name="activity" onChange={handleChange} className="form-control" />
       </div>
       <div className="form-group">
-        <label htmlFor="projects" className="form-label">Projects:</label>
-        <input type="text" defaultValue={formData.projects} name="projects" onChange={handleChange} className="form-control" />
+        <label htmlFor="projects" className="form-label">Projects and Experience:</label>
+        <textarea type="text" defaultValue={formData.projects} name="projects" onChange={handleChange} className="form-control" />
       </div>
       <div className="form-group">  
       <label className="form-label">Languages</label>

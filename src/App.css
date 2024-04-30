@@ -28,6 +28,19 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.form-control2{
+  display: block;
+  min-width: 100%;
+  max-width: 100%;
+  height: 150px;
+  padding: 0.675rem 0.75rem;
+  /* font-size: 1rem;
+  font-weight: 400; */
+  color: #212529;
+  border-radius: 0.375rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
 .form-group {
   margin-bottom: 1rem;
 }
@@ -62,7 +75,7 @@
   border-radius: 5px;
 }
 
-
+/* Displaying resumes */
 .resume-container {
     margin: 20px;
     padding: 10px;
@@ -80,6 +93,25 @@
 .resume-entry {
     margin: 10px 0;
     padding: 5px;
+}
+
+/* Adjusting header of Education, Projects and Experience, and Activity */
+.resume-container h3 {
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 0.3px; /* Adjust top and bottom margins as needed */
+}
+
+/* Align text of of Education, Projects and Experience, and Activity */
+.resume-container pre {
+  text-align: justify;
+  white-space: pre-wrap; /* Preserves spaces and line breaks */
+  word-wrap: break-word; /* Ensures long lines wrap */
+  font-family: inherit; /* Makes font consistent with the rest of the resume */
+  background: none; /* Removes default background styling if any */
+  border: none; /* Removes default border styling if any */
+  padding: 0; /* Removes default padding if any */
+  margin: 0; /* Aligns with the rest of the content */
 }
 
 .resume-button {

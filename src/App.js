@@ -27,7 +27,7 @@ function App() {
       const educationPrompt = "Im looking into creating a resume tailored to IT field, create in resume format education in CS. ";
       const education = await generateText(educationPrompt);
       
-      const projectsPrompt = "Describe a couple of software projects suitable for a resume.";
+      const projectsPrompt = "Describe a couple of software projects and experiences suitable for a resume.";
       const projects = await generateText(projectsPrompt);
       
       const activityPrompt = "Suggest some professional activities outside of work. ";
@@ -47,8 +47,6 @@ function App() {
   };
 
 
-
-  
   const onChangeHandler = (event) => {
     console.log(event)
     if(event.target.name === 'languages') {
@@ -136,15 +134,15 @@ function App() {
                     </div>
                     <div className="form-group">
                       <label htmlFor="education" className="form-label">Education</label>
-                      <input id="education" className="form-control" name="education" onChange={onChangeHandler} value={formData.education} />
+                      <textarea id="education" className="form-control2" name="education" onChange={onChangeHandler} value={formData.education} />
                     </div>
                     <div className="form-group">
                       <label htmlFor="projects" className="form-label">Projects</label>
-                      <input id="projects" className="form-control" name="Projects" onChange={onChangeHandler} value={formData.project} />
+                      <textarea id="projects" className="form-control2" name="projects" onChange={onChangeHandler} value={formData.projects} />
                     </div>
                     <div className="form-group">
                       <label htmlFor="activity" className="form-label">Other Activities</label>
-                      <input id="activity"  className="form-control" name="activity" onChange={onChangeHandler} value={formData.activity} />
+                      <textarea id="activity"  className="form-control2" name="activity" onChange={onChangeHandler} value={formData.activity} />
                     </div>
                     {/* <div className="form-group">
                       <label htmlFor="occupation" className="form-label">Occupation</label>
