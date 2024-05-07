@@ -91,7 +91,14 @@ function App() {
     // Navigate to the Display component
     navigate('/display', { state: { formData } }); 
 
-    
+    // Post data to the server
+    axios.post('http://localhost:3004/database', formData, {
+    headers: {
+        'Content-Type': 'application/json', // Adjust the content type if needed
+    },
+})
+    .then(response => console.log('Data inserted successfully:', response.data))
+    .catch(error => console.error('Error submitting data:', error));
 
     //reset the form
     setFormData({
@@ -133,26 +140,6 @@ function App() {
                       <input id="mobile" className="form-control" name="mobile" onChange={onChangeHandler} value={formData.mobile} />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="education" className="form-label">Education</label>
-                      <textarea id="education" className="form-control2" name="education" onChange={onChangeHandler} value={formData.education} />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="projects" className="form-label">Projects</label>
-                      <textarea id="projects" className="form-control2" name="projects" onChange={onChangeHandler} value={formData.projects} />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="activity" className="form-label">Other Activities</label>
-                      <textarea id="activity"  className="form-control2" name="activity" onChange={onChangeHandler} value={formData.activity} />
-                    </div>
-                    {/* <div className="form-group">
-                      <label htmlFor="occupation" className="form-label">Occupation</label>
-                      <select id="occupation" className="form-select" name="occupation" onChange={onChangeHandler} value={formData.occupation}>
-                        <option value="student">Student</option>
-                        <option value="employee">Employee</option>
-                        <option value="other">Other</option>
-                      </select>
-                    </div> */}
-                    <div className="form-group">
                       <label className="form-label">Languages</label>
                       <div>
                         <div>
@@ -185,6 +172,27 @@ function App() {
                         </div>
                       </div>
                     </div>
+                    <div className="form-group">
+                      <label htmlFor="education" className="form-label">Education</label>
+                      <textarea id="education" className="form-control2" name="education" onChange={onChangeHandler} value={formData.education} />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="projects" className="form-label">Projects</label>
+                      <textarea id="projects" className="form-control2" name="projects" onChange={onChangeHandler} value={formData.projects} />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="activity" className="form-label">Other Activities</label>
+                      <textarea id="activity"  className="form-control2" name="activity" onChange={onChangeHandler} value={formData.activity} />
+                    </div>
+                    {/* <div className="form-group">
+                      <label htmlFor="occupation" className="form-label">Occupation</label>
+                      <select id="occupation" className="form-select" name="occupation" onChange={onChangeHandler} value={formData.occupation}>
+                        <option value="student">Student</option>
+                        <option value="employee">Employee</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div> */}
+                    
                     <div className="form-group">
                       <button className="btn" type="button" onClick={handleAutomaticFilling}>Auto-Fill with AI</button>
                       <button className="btn" type="submit" >Submit</button>

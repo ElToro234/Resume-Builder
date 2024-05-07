@@ -90,13 +90,21 @@
     font-size: 16px;
 }
 
-.resume-entry {
-    margin: 10px 0;
-    padding: 5px;
+.resume-entry h4 {
+  text-align: center;
+  font-size: 33px;
+  margin-top: 25px;
+  margin-bottom: 0.3px; /* Removes the default margin below the h4 */
+}
+.contact-info {
+  display: flex;           /* Enables Flexbox */
+  justify-content: center; /* Centers items horizontally in the container */
+  gap: 20px;               /* Adds space between the email and mobile spans */
 }
 
 /* Adjusting header of Education, Projects and Experience, and Activity */
 .resume-container h3 {
+  font-size: 22px;
   text-align: center;
   margin-top: 25px;
   margin-bottom: 0.3px; /* Adjust top and bottom margins as needed */
@@ -113,6 +121,7 @@
   padding: 0; /* Removes default padding if any */
   margin: 0; /* Aligns with the rest of the content */
 }
+
 
 .resume-button {
   margin-right: 10px;

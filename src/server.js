@@ -25,15 +25,41 @@ app.use(bodyParser.json());
 });
 
 app.post('/database', (req, res) => {
-    db.insertData(req.body, (err, result) => {
+    console.log('Received data from insertion:', req.body);  // Log the incoming data
+    db.insertSubmission(req.body, (err, result) => {
+        if (err) {
+            console.error('Detailed error:', err);
+            res.status(500).send('Error inserting data into the database');
+        } else {
+            res.status(201).send('Data inserted successfully');
+        }
+    });
+  });
+
+  app.delete('/database', (req, res) => {
+    const { id } = req.params;  // Get the ID from the URL parameter
+    deleteSubmission(id, (err, result) => {
       if (err) {
-        console.error(err);
-        res.status(500).send('Error inserting data into the database');
+        console.error('Error deleting submission:', err);
+        res.status(500).send('Error deleting data from the database');
+      } else if (result.affectedRows === 0) { // This check might vary depending on the database
+        res.status(404).send('No submission found with that ID');
       } else {
-        res.status(201).send('Data inserted successfully');
+        res.status(200).send('Submission deleted successfully');
       }
     });
   });
+  
+  function deleteSubmission(submissionId, callback) {
+    const query = 'DELETE FROM submissions WHERE id = ?';
+    db.query(query, [submissionId], function(err, result) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, result);
+      }
+    });
+  }
 
   function startServer(port) {
     const server = app.listen(port, () => {
@@ -50,6 +76,6 @@ app.post('/database', (req, res) => {
   
     return server;
   }
-  
+
   // Start the server with the initial port
   startServer(PORT);

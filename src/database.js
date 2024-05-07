@@ -27,10 +27,17 @@ const db = new sqlite3.Database("./data/mydb.db", sqlite3.OPEN_READWRITE, (err) 
     
 const insertSubmission = (data, callback) => {
     const { name, email, mobile, education, activity, occupation, gender, languages, projects } = data;
+    if (!name || !email || !mobile) { // Check for required fields
+        return callback(new Error('Missing required fields'), null);
+    }
+
     const sql = `INSERT INTO submissions (name, email, mobile, education, activity, occupation, gender, languages, projects) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     
     db.run(sql, [name, email, mobile, education, activity, occupation, gender, JSON.stringify(languages), projects], function(err) {
-            callback(err, { id: this.lastID });
+        if (err) {
+            return callback(err, null);
+        }
+        callback(null, { id: this.lastID });
     });
 };
 
