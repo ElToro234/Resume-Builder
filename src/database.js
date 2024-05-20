@@ -8,22 +8,34 @@ const db = new sqlite3.Database("./data/mydb.db", sqlite3.OPEN_READWRITE, (err) 
         console.log('Connected to the SQLite database.');
         // initializeDB();
     });
-    db.run(`CREATE TABLE IF NOT EXISTS submissions (
-        id INTEGER PRIMARY KEY,
-        name TEXT,
-        email TEXT,
-        mobile TEXT,
-        education TEXT,
-        activity TEXT,
-        occupation TEXT,
-        gender TEXT,
-        languages TEXT,
-        projects TEXT
-    )`, (err) => {
-        if (err) {
-            console.error(err.message);
-        }
-    });
+    const initializeDB = () => {
+        db.run(`CREATE TABLE IF NOT EXISTS submissions (
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            email TEXT,
+            mobile TEXT,
+            education TEXT,
+            activity TEXT,
+            occupation TEXT,
+            gender TEXT,
+            languages TEXT,
+            projects TEXT
+        )`, (err) => {
+            if (err) {
+                console.error(err.message);
+            }
+        });
+    
+        db.run(`CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )`, (err) => {
+            if (err) {
+                console.error(err.message);
+            }
+        });
+    };
     
 const insertSubmission = (data, callback) => {
     const { name, email, mobile, education, activity, occupation, gender, languages, projects } = data;
@@ -48,10 +60,32 @@ const getAllSubmissions = (callback) => {
         callback(err, rows);
     });
 };
-    
+const getUserByEmail = (email, callback) => {
+    const sql = `SELECT * FROM users WHERE email = ?`;
+
+    db.get(sql, [email], (err, row) => {
+        callback(err, row);
+    });
+};
+
+// Insert a new user
+const insertUser = (user, callback) => {
+    const { email, password } = user;
+    const sql = `INSERT INTO users (email, password) VALUES (?, ?)`;
+
+    db.run(sql, [email, password], function(err) {
+        if (err) {
+            return callback(err);
+        }
+        callback(null);
+    });
+};
+
 module.exports = {
     insertSubmission,
     getAllSubmissions,
+    getUserByEmail,
+    insertUser
 };
     
     //Creating the table

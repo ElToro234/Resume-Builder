@@ -31,24 +31,24 @@ const Display = () => {
                     </div>
                     <div className="language-section">
                           <h3>Languages</h3>
-                          <h2>──────────────────────────────────────────────────</h2>
+                          <h2>───────────────────────────────────────────────</h2>
                           <pre>{formData.languages ? formatMultilineText(String(formData.languages)) : 'No languages provided'}</pre>
                       </div>
                     
                     <div className="education-section">
                         <h3>Education</h3>
-                        <h2>──────────────────────────────────────────────────</h2>
+                        <h2>───────────────────────────────────────────────</h2>
                         <pre>{formData.education ? formatMultilineText(formData.education) : 'No education provided'}</pre>
                       </div>
                     {/* <p className="resume-entry">Occupation: {formData.occupation || 'No occupation provided'}</p> */}
                     <div className="experience-section">
                         <h3>Projects and Experience</h3>
-                        <h2>──────────────────────────────────────────────────</h2>
+                        <h2>────────────────────────────────────────────</h2>
                         <pre>{formData.projects ? formatMultilineText(formData.projects) : 'No projects provided'}</pre>
                       </div>
                       <div className="activity-section">
                         <h3>Activities</h3>
-                        <h2>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</h2>
+                        <h2>────────────────────────────────────────────</h2>
                         <pre>{formData.activity ? formatMultilineText(formData.activity) : 'No activity provided'}</pre>
                       </div>
                     <button className="resume-button edit-button" onClick={() => handleEdit(index)}>Edit</button>

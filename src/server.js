@@ -4,7 +4,7 @@ const cors = require('cors');
 const db = require('./database'); // Importing database.js
 const app = express();
 
-const PORT = process.env.PORT || 3004;
+const PORT = process.env.PORT || 3006;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
@@ -49,7 +49,33 @@ app.post('/database', (req, res) => {
       }
     });
   });
-  
+
+  app.post('/signup', (req, res) => {
+    console.log('Signup request received:', req.body);
+    const { email, password } = req.body;
+
+    db.getUserByEmail(email, (err, user) => {
+        if (err) {
+            console.error('Database error:', err);
+            res.status(500).send('Database error');
+            return;
+        }
+
+        if (user) {
+            res.send('exist');
+        } else {
+            db.insertUser({ email, password }, (err) => {
+                if (err) {
+                    console.error('Database error:', err);
+                    res.status(500).send('Database error');
+                    return;
+                }
+                res.send('notexist');
+            });
+        }
+    });
+});
+
   function deleteSubmission(submissionId, callback) {
     const query = 'DELETE FROM submissions WHERE id = ?';
     db.query(query, [submissionId], function(err, result) {

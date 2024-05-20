@@ -7,6 +7,8 @@ import Display from './components/display';
 import EditForm from './components/EditForm';
 import Navbar from './components/navbar';
 import { useOpenAI, OpenAIProvider } from './components/openAI';
+import Login from './components/login';
+import Signup from './components/signup';
 
 function App() {
   const { generateText } = useOpenAI();
@@ -203,6 +205,8 @@ function App() {
             } />
             <Route path="/edit" element={<EditForm />} /> 
           <Route path="/display" element={<Display />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
 
       </div>
